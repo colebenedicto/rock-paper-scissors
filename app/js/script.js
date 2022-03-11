@@ -2,12 +2,14 @@
 1. Make a function that randomizes 'computer pick' and returns that pick
 2. Set a variable that stores 'players pick'. Make sure it is case-insensitive
 3. Make a function that takes the 'computer pick' and the 'player pick' and compares them and then returns the winner
-4. Make a function that calls #3 function, tracks score and declare player that first reaches 5 points
+4. Make a function that calls #3 function, tracks score and declare the player that reaches 5 points first as the winner
 */
 
 let playerScore = 0;
 let computerScore = 0;
 let roundWinner = "";
+
+game();
 
 function computerPlay(){
     const gameValues = ["rock", "paper", "scissors"];
@@ -41,13 +43,10 @@ function playRound(playerSelection, computerSelection) {
 
 function game() {
     while (Math.max(playerScore, computerScore) < 5) {
-        let playerSelection = prompt("let's play!").toLowerCase();
+        let playerSelection = prompt("Let's play Rock, Paper, Scissors!").toLowerCase();
         let computerSelection = computerPlay();
         playRound(playerSelection, computerSelection);
         console.log(`${roundWinner} | You: ${playerScore} Computer: ${computerScore}`);
     }
-    playerScore > computerScore ? console.log("You win!") : console.log("You lose");
+    playerScore > computerScore ? console.log("You win!") : console.log("You lose.");
 } 
-
-
-game();
