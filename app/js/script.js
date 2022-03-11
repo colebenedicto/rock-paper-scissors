@@ -1,3 +1,14 @@
+/*
+1. Make a function that randomizes 'computer pick' and returns that pick
+2. Set a variable that stores 'players pick'. Make sure it is case-insensitive
+3. Make a function that takes the 'computer pick' and the 'player pick' and compares them and then returns the winner
+4. Make a function that calls #3 function, tracks score and declare player that first reaches 5 points
+*/
+
+let playerScore = 0;
+let computerScore = 0;
+let roundWinner = "";
+
 function computerPlay(){
     const gameValues = ["rock", "paper", "scissors"];
 
@@ -6,40 +17,37 @@ function computerPlay(){
 }
 
 function playRound(playerSelection, computerSelection) {
-    let tie = `It's a tie! You both got ${computerSelection}.`;
-    let lose = `You lose. ${computerSelection} beats ${playerSelection}.`;
-    let win = `You win! ${playerSelection} beats ${computerSelection}.`;
-
-    switch(playerSelection) {
-        case "rock":
-            if (computerSelection == "rock") {
-                return tie;
-            } else if (computerSelection == "paper") {
-                return lose;
-            } else if (computerSelection == "scissors") {
-                return win;
-            }
-        case "paper":
-            if (computerSelection == "rock") {
-                return win;
-            } else if (computerSelection == "paper") {
-                return tie;
-            } else if (computerSelection == "scissors") {
-                return lose;
-            }
-        case "scissors":
-            if (computerSelection == "rock") {
-                return lose;
-            } else if (computerSelection == "paper") {
-                return win;
-            } else if (computerSelection == "scissors") {
-                return tie;
-            }
+    if (playerSelection === computerSelection) {
+        roundWinner = "It's a tie";
+        return;
+    } else if (
+        (playerSelection === "rock" && computerSelection === "scissors") ||
+        (playerSelection === "scissors" && computerSelection === "paper") ||
+        (playerSelection === "paper" && computerSelection === "rock")
+    ) {
+        playerScore++;
+        roundWinner = "Player wins"
+        return;
+    } else if (
+        (computerSelection === "rock" && playerSelection === "scissors") ||
+        (computerSelection === "scissors" && playerSelection === "paper") ||
+        (computerSelection === "paper" && playerSelection === "rock")
+    ) {
+        computerScore++;
+        roundWinner = "Computer wins"
+        return;
     }
 }
 
-let playerPick = "Paper";
+function game() {
+    while (Math.max(playerScore, computerScore) < 5) {
+        let playerSelection = prompt("let's play!").toLowerCase();
+        let computerSelection = computerPlay();
+        playRound(playerSelection, computerSelection);
+        console.log(`${roundWinner} | You: ${playerScore} Computer: ${computerScore}`);
+    }
+    playerScore > computerScore ? console.log("You win!") : console.log("You lose");
+} 
 
-const playerSelection = playerPick.toLowerCase();
-const computerSelection = computerPlay();
-console.log(playRound(playerSelection, computerSelection));
+
+game();
